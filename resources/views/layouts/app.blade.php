@@ -18,6 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Allura&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/plugins/swiper.min.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/sweetalert.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
         integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
@@ -278,7 +279,9 @@
         <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <use href="#icon_cart" />
         </svg>
-        <span class="cart-amount d-block position-absolute js-cart-items-count">3</span>
+        @if(Cart::instance('cart')->content()->count() > 0)
+        <span class="cart-amount d-block position-absolute js-cart-items-count">{{ Cart::instance('cart')->content()->count() }}</span>
+        @endif
       </a>
     </div>
 
@@ -311,10 +314,10 @@
               <a href="{{route('home.index')}}" class="navigation__link">Home</a>
             </li>
             <li class="navigation__item">
-              <a href="shop.html" class="navigation__link">Shop</a>
+              <a href="{{route('shop.index')}}" class="navigation__link">Shop</a>
             </li>
             <li class="navigation__item">
-              <a href="cart.html" class="navigation__link">Cart</a>
+              <a href="{{route('cart.index')}}" class="navigation__link">Cart</a>
             </li>
             <li class="navigation__item">
               <a href="about.html" class="navigation__link">About</a>
@@ -400,10 +403,10 @@
               <a href="{{route('home.index')}}" class="navigation__link">Home</a>
             </li>
             <li class="navigation__item">
-              <a href="shop.html" class="navigation__link">Shop</a>
+              <a href="{{route('shop.index')}}" class="navigation__link">Shop</a>
             </li>
             <li class="navigation__item">
-              <a href="cart.html" class="navigation__link">Cart</a>
+              <a href="{{route('cart.index')}}" class="navigation__link">Cart</a>
             </li>
             <li class="navigation__item">
               <a href="about.html" class="navigation__link">About</a>
@@ -483,18 +486,23 @@
           @endguest
 
 
-          <a href="wishlist.html" class="header-tools__item">
+          <a href="{{ route('wishlist.index') }}" class="header-tools__item header-tools__cart">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <use href="#icon_heart" />
             </svg>
+            @if (Cart::instance('wishlist')->content()->count() > 0)
+            <span class="cart-amount d-block position-absolute js-cart-items-count">{{ Cart::instance('wishlist')->content()->count() }}</span>
+            @endif
           </a>
 
-          <a href="cart.html" class="header-tools__item header-tools__cart">
+          <a href="{{route('cart.index')}}" class="header-tools__item header-tools__cart">
             <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none"
               xmlns="http://www.w3.org/2000/svg">
               <use href="#icon_cart" />
             </svg>
-            <span class="cart-amount d-block position-absolute js-cart-items-count">3</span>
+            @if (Cart::instance('cart')->content()->count() > 0)
+            <span class="cart-amount d-block position-absolute js-cart-items-count">{{ Cart::instance('cart')->content()->count() }}</span>
+            @endif
           </a>
         </div>
       </div>
@@ -665,6 +673,7 @@
   <script src="{{ asset('assets/js/plugins/jquery.min.js') }}"></script>
   <script src="{{ asset('assets/js/plugins/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('assets/js/plugins/bootstrap-slider.min.js') }}"></script>
+  <script src="{{ asset('js/sweetalert.min.js') }}"></script>   
   <script src="{{ asset('assets/js/plugins/swiper.min.js') }}"></script>
   <script src="{{ asset('assets/js/plugins/countdown.js') }}"></script>
   <script src="{{ asset('assets/js/theme.js') }}"></script>
