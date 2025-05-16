@@ -7,6 +7,7 @@ use App\Models\OrderItem;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -35,8 +36,6 @@ class UserController extends Controller
     {
       return redirect()->route('login');
     }
-    return view('user.order-details', compact('order'));
-
   }
 
   public function order_cancel(Request $request) {
