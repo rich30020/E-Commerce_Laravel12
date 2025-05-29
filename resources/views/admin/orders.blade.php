@@ -63,7 +63,7 @@
                                 <td class="text-center">${{$order->total}}</td>
                                 <td class="text-center">{{$order->status}}</td>
                                 <td class="text-center">{{$order->created_at}}</td>
-                                <td class="text-center">{{$order->orderItems->count()}}</td>
+                                <td class="text-center">{{$order->order_items_count}}</td>
                                 <td class="text-center">{{$order->delivered_date}}</td>
                                 <td class="text-center">
                                     <a href="{{route('admin.order.items',['order_id'=>$order->id])}}">

@@ -23,7 +23,9 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $orders = Order::orderBy('created_at', 'DESC')->get()->take(10);
+        $orders = Order::withCount('orderItems')
+            ->orderBy('created_at', 'DESC')
+            ->paginate(12); 
         $dashboardDatas = DB::select("
                                         SELECT 
                                             SUM(total) AS TotalAmount,
@@ -63,7 +65,14 @@ class AdminController extends Controller
         $TotalDeliveredAmount = collect($monthlyDatas)->sum('TotalDeliveredAmount');
         $TotalCanceledAmount = collect($monthlyDatas)->sum('TotalCanceledAmount');
 
-        return view('admin.index', compact('orders', 'dashboardDatas', 'AmountM', 'orderedAmountM', 'DeliveredAmountM', 'CanceledAmountM', 'TotalAmount', 'TotalOrderedAmount', 'TotalDeliveredAmount', 'TotalCanceledAmount'));
+        return view(
+            'admin.index',
+            compact(
+                'orders',
+                'dashboardDatas',
+                'AmountM', 'orderedAmountM',
+                'DeliveredAmountM',
+                'CanceledAmountM', 'TotalAmount', 'TotalOrderedAmount', 'TotalDeliveredAmount', 'TotalCanceledAmount'));
     }
 
     public function brands()
@@ -238,7 +247,7 @@ class AdminController extends Controller
 
     public function products()
     {
-        $products = Product::orderBy('created_at', 'DESC')->paginate(20);
+        $products = Product::with(['category', 'brand'])->orderBy('created_at', 'DESC')->paginate(20);
         return view('admin.products', compact('products'));
     }
 

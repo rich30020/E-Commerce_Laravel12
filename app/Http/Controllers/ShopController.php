@@ -43,9 +43,9 @@ class ShopController extends Controller
         }
 
         $brands = Brand::orderBy('name', 'ASC')->get();
-        $categories = Category::orderBy('name', 'ASC')->get();
+        $categories = Category::with('products:id,category_id')->orderBy('name', 'ASC')->get();
 
-        $products = Product::where(function($query) use($f_brands){
+        $products = Product::with('category')->where(function($query) use($f_brands){
             $query->whereIn('brand_id', explode(',', $f_brands))->orWhereRaw("'".$f_brands."' = ''");
         })
         ->where(function($query) use($f_categories){
