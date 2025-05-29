@@ -23,7 +23,9 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $orders = Order::withCount('orderItems')
+        $orders = Order::with(['orderItems' => function ($query) {
+            $query->whereNotNull('order_id');
+        }])->withCount('orderItems')
             ->orderBy('created_at', 'DESC')
             ->paginate(12); 
         $dashboardDatas = DB::select("
